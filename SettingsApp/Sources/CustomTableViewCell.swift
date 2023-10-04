@@ -42,6 +42,27 @@ class CustomTableViewCell: UITableViewCell {
         }
     }
     
+    private func iconBackgroundColorForSetting(_ setting: Setting) -> UIColor {
+        switch setting.title {
+        case "Airplane Mode":
+            return .orange
+        case "Wi-Fi", "Bluetooth", "VPN", "Display & Brightness", "Home Screen", "Accessibility", "Privacy & Security":
+            return .systemBlue
+        case "Mobile Data", "Battery":
+            return .systemGreen
+        case "Notifications", "Sounds & Haptics", "Face ID & Passcode", "Emergency SOS":
+            return .red
+        case "Focus", "Screen Time":
+            return .blue
+        case "Wallpaper", "Siri & Search":
+            return .darkGray
+        case "General", "Control Centre":
+            return .gray
+        default:
+            return .clear
+        }
+    }
+    
     // MARK: - Reuse
 
 }
