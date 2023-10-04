@@ -2,6 +2,30 @@ import UIKit
 import SnapKit
 
 class CustomTableViewCell: UITableViewCell {
+    
+    var setting: Setting? {
+        didSet {
+            guard let setting = setting else {
+                resetCell()
+                return
+            }
+
+            settingImageView.image = setting.image.withRenderingMode(.alwaysTemplate)
+            titleLabel.text = setting.title
+            settingImageView.backgroundColor = iconBackgroundColorForSetting(setting)
+
+            switchControl.isOn = UserDefaults.standard.bool(forKey: setting.title)
+
+            switch setting.title {
+            case "Airplane Mode", "VPN":
+                switchControl.isHidden = false
+                accessoryType = .none
+            default:
+                switchControl.isHidden = true
+                accessoryType = .disclosureIndicator
+            }
+        }
+    }
 
     // MARK: - Outlets
     
@@ -69,6 +93,12 @@ class CustomTableViewCell: UITableViewCell {
             make.trailing.equalToSuperview().offset(-16)
             make.centerY.equalToSuperview()
         }
+    }
+    
+    private func resetCell() {
+        settingImageView.image = nil
+        titleLabel.text = nil
+        settingImageView.backgroundColor = .clear
     }
     
     private func iconBackgroundColorForSetting(_ setting: Setting) -> UIColor {
