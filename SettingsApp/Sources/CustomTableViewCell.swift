@@ -135,5 +135,9 @@ class CustomTableViewCell: UITableViewCell {
     }
     
     // MARK: - Reuse
-
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        setting = nil
+    }
 }
