@@ -17,9 +17,17 @@ class CustomTableViewCell: UITableViewCell {
     
     private let titleLabel: UILabel = {
        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 18, weight: .regular)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
+       label.font = UIFont.systemFont(ofSize: 18, weight: .regular)
+       label.translatesAutoresizingMaskIntoConstraints = false
+       return label
+    }()
+    
+    private let switchControl: UISwitch = {
+        let switchControl = UISwitch()
+        switchControl.isOn = true
+        switchControl.isEnabled = true
+        switchControl.translatesAutoresizingMaskIntoConstraints = false
+        return switchControl
     }()
     
     // MARK: - Initializers
@@ -28,6 +36,7 @@ class CustomTableViewCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupHierarchy()
         setupLayout()
+        switchControl.addTarget(self, action: #selector(switchStateDidChange(_:)), for: .valueChanged)
     }
     
     required init?(coder: NSCoder) {
@@ -39,6 +48,7 @@ class CustomTableViewCell: UITableViewCell {
     private func setupHierarchy() {
         addSubview(settingImageView)
         addSubview(titleLabel)
+        addSubview(switchControl)
     }
     
     private func setupLayout() {
@@ -51,6 +61,12 @@ class CustomTableViewCell: UITableViewCell {
         
         titleLabel.snp.makeConstraints { make in
             make.leading.equalTo(settingImageView.snp.trailing).offset(16)
+            make.centerY.equalToSuperview()
+            make.trailing.equalTo(switchControl.snp.leading).offset(-16)
+        }
+        
+        switchControl.snp.makeConstraints { make in
+            make.trailing.equalToSuperview().offset(-16)
             make.centerY.equalToSuperview()
         }
     }
@@ -73,6 +89,18 @@ class CustomTableViewCell: UITableViewCell {
             return .gray
         default:
             return .clear
+        }
+    }
+    
+    // MARK: - Actions
+    
+    @objc func switchStateDidChange(_ sender: UISwitch) {
+        if sender.isOn {
+            print("Turned on")
+            UIApplication.shared.registerForRemoteNotifications()
+        } else {
+            UIApplication.shared.unregisterForRemoteNotifications()
+            print("Turned off")
         }
     }
     
