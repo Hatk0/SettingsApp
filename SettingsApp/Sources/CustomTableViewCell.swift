@@ -15,6 +15,13 @@ class CustomTableViewCell: UITableViewCell {
         return imageView
     }()
     
+    private let titleLabel: UILabel = {
+       let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 18, weight: .regular)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
     // MARK: - Initializers
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -31,6 +38,7 @@ class CustomTableViewCell: UITableViewCell {
     
     private func setupHierarchy() {
         addSubview(settingImageView)
+        addSubview(titleLabel)
     }
     
     private func setupLayout() {
@@ -39,6 +47,11 @@ class CustomTableViewCell: UITableViewCell {
             make.centerY.equalToSuperview()
             make.width.equalTo(35)
             make.height.equalTo(38)
+        }
+        
+        titleLabel.snp.makeConstraints { make in
+            make.leading.equalTo(settingImageView.snp.trailing).offset(16)
+            make.centerY.equalToSuperview()
         }
     }
     
