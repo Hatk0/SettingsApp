@@ -13,6 +13,11 @@ class DetailView: UIViewController {
         return label
     }()
     
+    private lazy var imageView: UIImageView = {
+        let imageView = UIImageView()
+        return imageView
+    }()
+    
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
@@ -26,6 +31,7 @@ class DetailView: UIViewController {
     
     private func setupHierarchy() {
         view.addSubview(titleLabel)
+        view.addSubview(imageView)
     }
     
     private func setupLayout() {
@@ -33,8 +39,14 @@ class DetailView: UIViewController {
             make.centerX.equalToSuperview()
         }
         
+        imageView.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.centerY.equalToSuperview().offset(-50)
+        }
+        
         if let setting = setting {
             titleLabel.text = setting.title
+            imageView.image = setting.image
         }
     }
 }
