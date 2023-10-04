@@ -37,6 +37,7 @@ class DetailView: UIViewController {
     private func setupLayout() {
         titleLabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
+            make.top.equalTo(imageView.snp.bottom).offset(20)
         }
         
         imageView.snp.makeConstraints { make in
