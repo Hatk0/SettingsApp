@@ -6,9 +6,10 @@ class ViewController: UIViewController {
     // MARK: - Outlets
     
     private lazy var tableView: UITableView = {
-        let tableView = UITableView(frame: .zero, style: .plain)
+        let tableView = UITableView(frame: .zero, style: .grouped)
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         tableView.dataSource = self
+        tableView.delegate = self
         return tableView
     }()
     
@@ -31,7 +32,7 @@ class ViewController: UIViewController {
 
     private func setupLayout() {
         tableView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+            make.top.right.bottom.left.equalTo(view)
         }
     }
 
@@ -39,7 +40,7 @@ class ViewController: UIViewController {
     
 }
 
-extension ViewController: UITableViewDataSource {
+extension ViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         10
     }
