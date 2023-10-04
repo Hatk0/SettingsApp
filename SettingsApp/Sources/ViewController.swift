@@ -62,10 +62,12 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-        if let setting = settings?[indexPath.section][indexPath.row] {
+            let setting = Setting.settings[indexPath.section][indexPath.row]
+            tableView.deselectRow(at: indexPath, animated: true)
             print("The setting is selected: \(setting.title)")
-        }
+            let detailView = DetailView()
+            detailView.setting = setting
+            navigationController?.pushViewController(detailView, animated: true)
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
